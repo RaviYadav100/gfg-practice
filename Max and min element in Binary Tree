@@ -24,32 +24,46 @@ Constraints:
 ----------------------------------------------------// Solution //----------------------------------------------------------------
 
 /*
-class Node {
-public:
+struct Node
+{
     int data;
-    Node *left;
-    Node *right;
+    struct Node *left;
+    struct Node *right;
 
-    Node(int x) {
+    Node(int x)
+    {
         data = x;
-        left = right = NULL;
+        left = NULL;
+        right = NULL;
     }
 };
 */
-
 class Solution {
   public:
-    // Function to convert a binary tree into its mirror tree.
-    void binaryTree(Node* node){
-        if(node==NULL){
-            return;
-        }
-       binaryTree(node->left);
-       binaryTree(node->right);
-       swap(node->left,node->right);
-    }
-    void mirror(Node* node) {
-       binaryTree(node);
+  int findMinHelper(Node *root){
+      if(root==NULL){
+          return INT_MAX;
+      }
+      int leftSubTree=findMinHelper(root->left);
+      int rightSubTree=findMinHelper(root->right);
+      return min(root->data,min(leftSubTree,rightSubTree));
+  }
+  int findMaxHelper(Node *root){
+      if(root==NULL){
+          return INT_MIN;
+      }
+      int leftSubTree=findMaxHelper(root->left);
+      int rightSubTree=findMaxHelper(root->right);
+      return max(root->data,max(leftSubTree,rightSubTree));
+  }
+ 
+    int findMax(Node *root) {
+        return findMaxHelper(root);
         
+    }
+
+    int findMin(Node *root) {
+        
+        return findMinHelper(root);
     }
 };
