@@ -1,0 +1,55 @@
+-----------------------------------------------------------// Root to leaf path sum //------------------------------------------------------------
+
+Given a binary tree and an integer target, check whether there is a root-to-leaf path with its sum as target.
+
+Examples :
+
+Input: target = 2
+   1 
+ /   \
+2     3
+Output: false
+Explanation: There is no root to leaf path with sum 2.
+Input: target = 4
+   1
+ /   \
+2     3
+Output: true
+Explanation: The sum of path from leaf node 3 to root 1 is 4.
+Constraints:
+1 ≤ number of nodes ≤ 104
+1 ≤ target ≤ 106
+
+---------------------------------------------------------------------------// Solution //-----------------------------------------------------------
+
+/* A binary tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+/*you are required to
+complete this function */
+class Solution {
+  public:
+  bool Sum(Node *root,int target, int sum){
+      if(root==NULL){
+          return false;
+      }
+     sum+=root->data;
+     if(root->left==NULL&&root->right==NULL){
+         if(sum==target){
+             return true;
+         }else{
+             return false;
+         }
+     }else{
+         return Sum(root->left,target,sum)||Sum(root->right,target,sum);
+     }
+  }
+    bool hasPathSum(Node *root, int target) {
+    return Sum(root,target,0);
+        
+    }
+};
